@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EV Service Center – Website (fe-website)
 
-## Getting Started
+## 🌐 Giới thiệu
 
-First, run the development server:
+Đây là ứng dụng **Website** quản lý Trung tâm Bảo dưỡng Xe Điện (EV Service Center).  
+Người dùng truy cập qua trình duyệt, cung cấp giao diện quản lý dịch vụ, khách hàng và nhân sự.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 Chủ đề dự án
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**EV Service Center Maintenance Management System**  
+Hệ thống quản lý bảo dưỡng xe điện cho trung tâm dịch vụ, phục vụ **Customer – Staff – Technician – Admin**.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧩 Các tính năng
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Chức năng cho Khách hàng (Customer)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Theo dõi xe & nhắc nhở**
+  - Nhắc bảo dưỡng định kỳ theo km/thời gian.
+  - Nhắc thanh toán gói bảo dưỡng.
+- **Đặt lịch dịch vụ**
+  - Đặt lịch bảo dưỡng/sửa chữa trực tuyến.
+  - Chọn trung tâm & loại dịch vụ.
+  - Nhận xác nhận & thông báo trạng thái (chờ – đang bảo dưỡng – hoàn tất).
+- **Quản lý hồ sơ & chi phí**
+  - Lưu lịch sử bảo dưỡng xe.
+  - Quản lý chi phí từng lần bảo dưỡng/sửa chữa.
+  - Thanh toán online (e-wallet, banking).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Chức năng cho Trung tâm dịch vụ (Staff, Technician, Admin)
 
-## Deploy on Vercel
+- **Quản lý khách hàng & xe**
+  - Hỗ trợ khách hàng & xe (model, VIN, lịch sử).
+  - Chat trực tuyến với khách hàng.
+- **Quản lý lịch hẹn & dịch vụ** ✅ nhóm làm
+  - Tiếp nhận & đặt lịch.
+  - Lập lịch cho kỹ thuật viên.
+  - Quản lý phiếu tiếp nhận & checklist EV.
+- **Quản lý quy trình bảo dưỡng** ✅ nhóm làm
+  - Theo dõi tiến độ xe: chờ – đang làm – hoàn tất.
+  - Ghi nhận tình trạng xe.
+- **Quản lý phụ tùng** ✅ nhóm làm
+  - Theo dõi số lượng phụ tùng.
+  - Kiểm soát tồn kho tối thiểu.
+  - AI gợi ý phụ tùng thay thế.
+- **Quản lý nhân sự** ✅ nhóm làm
+  - Phân công kỹ thuật viên theo ca/lịch.
+  - Theo dõi hiệu suất & chứng chỉ.
+- **Quản lý tài chính & báo cáo**
+  - Báo cáo dịch vụ, hóa đơn, thanh toán online.
+  - Thống kê loại dịch vụ phổ biến.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Công nghệ Website
+
+- **Next.js 15 (App Router)** + **React 19**
+- **TypeScript**
+- **TailwindCSS v4**
+- **TanStack Query**
+- **Zustand**
+- **React Hook Form + Zod**
+- **RBAC** Middleware & hooks
+- **Next API Routes** (mock API ban đầu)
+
+---
