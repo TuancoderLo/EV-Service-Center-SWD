@@ -6,8 +6,13 @@ import { useAuthStore } from "@/stores/auth";
 import { me } from "@/services/auth";
 import { LoadingPage } from "@/components/ui/LoadingSpinner";
 
-export default function AuthInitializer({ children }: { children: React.ReactNode }) {
-  const { token, user, isInitialized, setAuth, clear, initialize, setLoading } = useAuthStore();
+export default function AuthInitializer({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { token, user, isInitialized, setAuth, clear, initialize, setLoading } =
+    useAuthStore();
 
   useEffect(() => {
     // Initialize auth state from localStorage
@@ -19,7 +24,7 @@ export default function AuthInitializer({ children }: { children: React.ReactNod
     if (isInitialized && token && !user) {
       setLoading(true);
       me()
-        .then(userData => {
+        .then((userData) => {
           setAuth(userData, token);
         })
         .catch(() => {

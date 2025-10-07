@@ -71,11 +71,13 @@ export default function RegisterPage() {
           <p className="text-red-600 text-sm">{errors.password.message}</p>
         )}
         {msg && (
-          <div className={`p-3 rounded-md ${
-            msg.includes('thành công') 
-              ? 'bg-green-50 text-green-800 border border-green-200' 
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}>
+          <div
+            className={`p-3 rounded-md ${
+              msg.includes("thành công")
+                ? "bg-green-50 text-green-800 border border-green-200"
+                : "bg-red-50 text-red-800 border border-red-200"
+            }`}
+          >
             {msg}
           </div>
         )}

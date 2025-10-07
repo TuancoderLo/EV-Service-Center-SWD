@@ -36,7 +36,9 @@ export default function DashboardPage() {
               <p className="text-blue-900">{user.email}</p>
             </div>
             <div>
-              <span className="text-sm font-medium text-blue-700">Vai trò:</span>
+              <span className="text-sm font-medium text-blue-700">
+                Vai trò:
+              </span>
               <p className="text-blue-900 capitalize">{user.role}</p>
             </div>
             <div>
@@ -52,27 +54,27 @@ export default function DashboardPage() {
           <h3 className="font-semibold text-gray-900 mb-2">📅 Đặt lịch</h3>
           <p className="text-gray-600 text-sm">Quản lý lịch hẹn dịch vụ</p>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow">
           <h3 className="font-semibold text-gray-900 mb-2">📦 Kho hàng</h3>
           <p className="text-gray-600 text-sm">Quản lý tồn kho linh kiện</p>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow">
           <h3 className="font-semibold text-gray-900 mb-2">👥 Nhân viên</h3>
           <p className="text-gray-600 text-sm">Quản lý đội ngũ nhân viên</p>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow">
           <h3 className="font-semibold text-gray-900 mb-2">🔧 Kỹ thuật viên</h3>
           <p className="text-gray-600 text-sm">Quản lý kỹ thuật viên</p>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow">
           <h3 className="font-semibold text-gray-900 mb-2">⚡ Lịch trình</h3>
           <p className="text-gray-600 text-sm">Lập lịch công việc</p>
         </div>
-        
+
         <div className="bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow">
           <h3 className="font-semibold text-gray-900 mb-2">🔄 Quy trình</h3>
           <p className="text-gray-600 text-sm">Quản lý quy trình làm việc</p>

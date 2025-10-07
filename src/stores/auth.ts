@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
   isLoading: false,
   isInitialized: false,
-  
+
   setAuth: (user, token) => {
     if (typeof window !== "undefined") {
       if (token) {
@@ -27,20 +27,22 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         document.cookie = `access_token=${token}; path=/; max-age=${7 * 24 * 60 * 60}`; // 7 days
       } else {
         localStorage.removeItem("access_token");
-        document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        document.cookie =
+          "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       }
     }
     set({ user, token, isInitialized: true });
   },
-  
+
   clear: () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("access_token");
-      document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie =
+        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
     set({ user: null, token: null, isInitialized: true });
   },
-  
+
   initialize: () => {
     if (typeof window !== "undefined" && !get().isInitialized) {
       const token = localStorage.getItem("access_token");
@@ -53,6 +55,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
     }
   },
-  
+
   setLoading: (isLoading: boolean) => set({ isLoading }),
 }));

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 interface UseAsyncState<T> {
   data: T | null;
@@ -17,7 +17,7 @@ interface ErrorWithResponse {
 
 function getErrorMessage(error: unknown): string {
   const err = error as ErrorWithResponse;
-  return err?.response?.data?.message || err?.message || 'Đã xảy ra lỗi';
+  return err?.response?.data?.message || err?.message || "Đã xảy ra lỗi";
 }
 
 export function useAsync<T>(
@@ -34,19 +34,19 @@ export function useAsync<T>(
   const memoizedAsyncFunction = useCallback(asyncFunction, dependencies);
 
   useEffect(() => {
-    setState(prev => ({ ...prev, loading: true, error: null }));
-    
+    setState((prev) => ({ ...prev, loading: true, error: null }));
+
     memoizedAsyncFunction()
-      .then(data => setState({ data, loading: false, error: null }))
+      .then((data) => setState({ data, loading: false, error: null }))
       .catch((error: unknown) => {
         setState({ data: null, loading: false, error: getErrorMessage(error) });
       });
   }, [memoizedAsyncFunction]);
 
   const refetch = useCallback(() => {
-    setState(prev => ({ ...prev, loading: true, error: null }));
+    setState((prev) => ({ ...prev, loading: true, error: null }));
     memoizedAsyncFunction()
-      .then(data => setState({ data, loading: false, error: null }))
+      .then((data) => setState({ data, loading: false, error: null }))
       .catch((error: unknown) => {
         setState({ data: null, loading: false, error: getErrorMessage(error) });
       });
@@ -65,7 +65,7 @@ export function useAsyncAction<T extends any[], R>(
   const execute = async (...args: T): Promise<R | null> => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await asyncFunction(...args);
       return result;

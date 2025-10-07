@@ -65,12 +65,7 @@ export default function LoginPage() {
         {errors.password && (
           <p className="text-red-600 text-sm">{errors.password.message}</p>
         )}
-        {err && (
-          <ErrorMessage 
-            message={err} 
-            onRetry={() => setErr("")} 
-          />
-        )}
+        {err && <ErrorMessage message={err} onRetry={() => setErr("")} />}
         <LoadingButton
           loading={loading}
           type="submit"

@@ -6,23 +6,24 @@ import { useState } from "react";
 import AuthInitializer from "@/components/AuthInitializer";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const [client] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 1,
-        refetchOnWindowFocus: false,
-      },
-      mutations: {
-        retry: 1,
-      },
-    },
-  }));
-  
+  const [client] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: 1,
+            refetchOnWindowFocus: false,
+          },
+          mutations: {
+            retry: 1,
+          },
+        },
+      })
+  );
+
   return (
     <QueryClientProvider client={client}>
-      <AuthInitializer>
-        {children}
-      </AuthInitializer>
+      <AuthInitializer>{children}</AuthInitializer>
     </QueryClientProvider>
   );
 }

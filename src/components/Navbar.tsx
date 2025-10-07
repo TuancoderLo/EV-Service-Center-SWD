@@ -16,24 +16,30 @@ export default function Navbar() {
 
   return (
     <nav className="border-b bg-white shadow-sm p-4 flex gap-6 items-center">
-      <Link href="/" className="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+      <Link
+        href="/"
+        className="font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+      >
         EV Service Center
       </Link>
       {user && (
-        <Link href="/dashboard" className="text-gray-600 hover:text-gray-800 transition-colors">
+        <Link
+          href="/dashboard"
+          className="text-gray-600 hover:text-gray-800 transition-colors"
+        >
           Dashboard
         </Link>
       )}
       <div className="ml-auto flex items-center gap-4">
         {!user && (
           <>
-            <Link 
+            <Link
               href="/login"
               className="px-4 py-2 text-blue-600 hover:text-blue-800 font-medium transition-colors"
             >
               Đăng nhập
             </Link>
-            <Link 
+            <Link
               href="/register"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
@@ -43,9 +49,11 @@ export default function Navbar() {
         )}
         {user && (
           <>
-            <span className="text-sm text-gray-600 font-medium">Xin chào, {user.name}</span>
-            <button 
-              onClick={logout} 
+            <span className="text-sm text-gray-600 font-medium">
+              Xin chào, {user.name}
+            </span>
+            <button
+              onClick={logout}
               className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
             >
               Đăng xuất
