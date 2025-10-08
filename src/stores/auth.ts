@@ -23,10 +23,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     if (typeof window !== "undefined") {
       if (token) {
         localStorage.setItem("access_token", token);
+        localStorage.setItem("auth_token", token); // For mock API
         // Also set as cookie for middleware
         document.cookie = `access_token=${token}; path=/; max-age=${7 * 24 * 60 * 60}`; // 7 days
       } else {
         localStorage.removeItem("access_token");
+        localStorage.removeItem("auth_token");
         document.cookie =
           "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       }
@@ -37,6 +39,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   clear: () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("access_token");
+      localStorage.removeItem("auth_token"); // For mock API
       document.cookie =
         "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }

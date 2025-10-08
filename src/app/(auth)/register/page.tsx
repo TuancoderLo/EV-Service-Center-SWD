@@ -44,15 +44,15 @@ export default function RegisterPage() {
     setLoading(true);
     setMsg("");
     try {
-      await registerApi({
+      const result = await registerApi({
         name: data.fullName,
-        username: data.username,
         email: data.email,
         password: data.password,
+        username: data.username,
         phoneNumber: data.phoneNumber,
         address: data.address,
       });
-      setMsg("Đăng ký thành công — chuyển tới đăng nhập…");
+      setMsg(result.message || "Đăng ký thành công — chuyển tới đăng nhập…");
       setTimeout(() => router.push("/login"), 800);
     } catch (e: unknown) {
       const error = e as { response?: { data?: { message?: string } } };

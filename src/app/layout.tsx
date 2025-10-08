@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// 👇 import thêm phần Providers và Navbar
+// 👇 import thêm phần Providers (bỏ Navbar)
 import Providers from "@/lib/providers";
-import Navbar from "@/components/Navbar";
 import ErrorBoundary from "@/components/ui/ErrorBoundary";
 
 const geistSans = Geist({
@@ -35,11 +34,8 @@ export default function RootLayout({
         {/* Bọc toàn bộ app trong React Query Provider */}
         <Providers>
           <ErrorBoundary>
-            {/* Thanh Navbar dùng chung cho mọi trang */}
-            <Navbar />
-
-            {/* Nội dung từng trang */}
-            <main className="p-4">{children}</main>
+            {/* ✅ CHỈ CHỨA CHILDREN - KHÔNG CÒN NAVBAR */}
+            {children}
           </ErrorBoundary>
         </Providers>
       </body>

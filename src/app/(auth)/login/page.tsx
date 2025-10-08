@@ -12,8 +12,8 @@ import { useAuthStore } from "@/stores/auth";
 import { LoadingButton } from "@/components/ui/LoadingSpinner";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
+  email: z.string().email("Email không hợp lệ"),
+  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
 });
 type FormData = z.infer<typeof schema>;
 
@@ -25,10 +25,21 @@ export default function LoginPage() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   const setAuth = useAuthStore((s) => s.setAuth);
   const router = useRouter();
-  const next = useSearchParams().get("next") || "/dashboard";
+  const next = useSearchParams().get("next");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  // ✅ Helper function để chuyển hướng theo role
+  const getRoleBasedDashboard = (role: string): string => {
+    const dashboards = {
+      admin: "/admin/dashboard",
+      staff: "/staff/dashboard", 
+      technician: "/technician/dashboard",
+      member: "/member/dashboard"
+    };
+    return dashboards[role as keyof typeof dashboards] || "/dashboard";
+  };
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
@@ -36,7 +47,10 @@ export default function LoginPage() {
     try {
       const res = await login(data);
       setAuth(res.user, res.access_token ?? null);
-      router.push(next);
+      
+      // ✅ LOGIC CHUYỂN HƯỚNG THEO ROLE
+      const redirectUrl = next || getRoleBasedDashboard(res.user.role);
+      router.push(redirectUrl);
     } catch (e: unknown) {
       const error = e as { response?: { data?: { message?: string } } };
       setErr(error?.response?.data?.message || "Đăng nhập thất bại");
@@ -198,7 +212,7 @@ export default function LoginPage() {
         </form>
 
         {/* Footer Links */}
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center space-y-4">
           <p className="text-gray-600 text-sm">
             Chưa có tài khoản?{" "}
             <Link
@@ -208,6 +222,16 @@ export default function LoginPage() {
               Đăng ký ngay
             </Link>
           </p>
+          
+          <p className="text-gray-600 text-sm">
+            <Link
+              href="/forgot-password"
+              className="text-orange-600 hover:text-orange-700 font-medium hover:underline"
+            >
+              Quên mật khẩu?
+            </Link>
+          </p>
+
           <p className="text-gray-500 text-xs mt-4">
             <Link href="/" className="hover:text-gray-700 hover:underline">
               ← Về trang chủ
