@@ -30,15 +30,24 @@ export default function LoginPage() {
   const [err, setErr] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Helper function để chuyển hướng theo role
-  const getRoleBasedDashboard = (role: string): string => {
-    const dashboards = {
-      admin: "/admin/dashboard",
-      staff: "/staff/dashboard", 
-      technician: "/technician/dashboard",
-      member: "/member/dashboard"
-    };
-    return dashboards[role as keyof typeof dashboards] || "/dashboard";
+  // ✅ SỬA LOGIC REDIRECT: Member ở lại homepage, nhân viên vào dashboard
+  const getRoleBasedRedirect = (role: string): string => {
+    // Nếu có next URL thì ưu tiên next
+    if (next) return next;
+    
+    // Logic redirect theo role
+    switch (role) {
+      case "admin":
+        return "/admin/dashboard";
+      case "staff": 
+        return "/staff/dashboard";
+      case "technician":
+        return "/technician/dashboard";
+      case "member":
+        return "/"; // ✅ Member ở lại homepage thay vì dashboard
+      default:
+        return "/";
+    }
   };
 
   const onSubmit = async (data: FormData) => {
@@ -47,9 +56,9 @@ export default function LoginPage() {
     try {
       const res = await login(data);
       setAuth(res.user, res.access_token ?? null);
-      
-      // ✅ LOGIC CHUYỂN HƯỚNG THEO ROLE
-      const redirectUrl = next || getRoleBasedDashboard(res.user.role);
+
+      // ✅ SỬA: Sử dụng logic redirect mới
+      const redirectUrl = getRoleBasedRedirect(res.user.role);
       router.push(redirectUrl);
     } catch (e: unknown) {
       const error = e as { response?: { data?: { message?: string } } };
@@ -222,7 +231,7 @@ export default function LoginPage() {
               Đăng ký ngay
             </Link>
           </p>
-          
+
           <p className="text-gray-600 text-sm">
             <Link
               href="/forgot-password"

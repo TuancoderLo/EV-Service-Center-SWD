@@ -8,15 +8,15 @@ export function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Protected routes - require authentication
+  // ✅ SỬA: Protected routes - chỉ dashboard routes cần auth
   const protectedRoutes = [
-    "/dashboard",
     "/admin",
+    "/staff", 
+    "/technician",
+    "/member",
     "/bookings",
     "/inventorys",
     "/schedules",
-    "/staff",
-    "/technicians",
     "/workflows",
   ];
 
@@ -32,10 +32,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Redirect authenticated users away from auth pages
-  const authPages = ["/login", "/register"];
+  // ✅ SỬA: Auth pages - redirect authenticated users to homepage
+  const authPages = ["/login", "/register", "/forgot-password", "/reset-password"];
   if (authPages.includes(pathname) && token) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    // ✅ Tất cả roles sau khi login thành công đều về homepage
+    // Từ đó họ sẽ navigate manually đến dashboard
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   // Add security headers

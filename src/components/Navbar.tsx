@@ -11,7 +11,23 @@ export default function Navbar() {
 
   const logout = () => {
     clear();
-    router.push("/login");
+    router.push("/");  // ✅ Sau khi logout về homepage
+  };
+
+  // Helper function để get dashboard URL theo role
+  const getDashboardUrl = (role: string): string => {
+    switch (role) {
+      case "admin":
+        return "/admin/dashboard";
+      case "staff":
+        return "/staff/dashboard";
+      case "technician":
+        return "/technician/dashboard";
+      case "member":
+        return "/member/dashboard";
+      default:
+        return "/";
+    }
   };
 
   return (
@@ -22,15 +38,19 @@ export default function Navbar() {
       >
         EV Service Center
       </Link>
+      
+      {/* ✅ Dashboard link - chỉ hiển thị khi user đã login */}
       {user && (
         <Link
-          href="/dashboard"
-          className="text-gray-600 hover:text-gray-800 transition-colors"
+          href={getDashboardUrl(user.role)}
+          className="text-gray-600 hover:text-gray-800 transition-colors font-medium"
         >
           Dashboard
         </Link>
       )}
+      
       <div className="ml-auto flex items-center gap-4">
+        {/* ✅ TRƯỜNG HỢP 1: User chưa login */}
         {!user && (
           <>
             <Link
@@ -47,14 +67,40 @@ export default function Navbar() {
             </Link>
           </>
         )}
+        
+        {/* ✅ TRƯỜNG HỢP 2: User đã login (bao gồm member) */}
         {user && (
           <>
-            <span className="text-sm text-gray-600 font-medium">
-              Xin chào, {user.name}
-            </span>
+            <div className="flex items-center space-x-3">
+              {/* Avatar */}
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              
+              {/* User info */}
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-gray-900">
+                  {user.name}
+                </span>
+                {/* Role badge */}
+                <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
+                  user.role === 'admin' ? 'bg-red-100 text-red-700' :
+                  user.role === 'staff' ? 'bg-blue-100 text-blue-700' :
+                  user.role === 'technician' ? 'bg-orange-100 text-orange-700' :
+                  'bg-purple-100 text-purple-700'
+                }`}>
+                  {user.role === 'member' ? 'Khách hàng' :
+                   user.role === 'staff' ? 'Nhân viên' :
+                   user.role === 'technician' ? 'Kỹ thuật viên' :
+                   'Quản trị viên'}
+                </span>
+              </div>
+            </div>
+            
+            {/* Logout button */}
             <button
               onClick={logout}
-              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors text-sm"
             >
               Đăng xuất
             </button>

@@ -82,8 +82,12 @@ export default function RegisterPage() {
               />
             </svg>
           </div>
-          <h1 className="text-xl font-bold text-gray-900 mb-1">Tạo tài khoản</h1>
-          <p className="text-gray-600 text-sm">Tham gia EV Service Center ngay hôm nay</p>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">
+            Tạo tài khoản
+          </h1>
+          <p className="text-gray-600 text-sm">
+            Tham gia EV Service Center ngay hôm nay
+          </p>
         </div>
 
         {/* Form */}
@@ -106,7 +110,9 @@ export default function RegisterPage() {
                 {...register("username")}
               />
               {errors.username && (
-                <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.username.message}
+                </p>
               )}
             </div>
 
@@ -126,7 +132,9 @@ export default function RegisterPage() {
                 {...register("fullName")}
               />
               {errors.fullName && (
-                <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.fullName.message}
+                </p>
               )}
             </div>
           </div>
@@ -149,7 +157,9 @@ export default function RegisterPage() {
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -169,7 +179,9 @@ export default function RegisterPage() {
                 {...register("phoneNumber")}
               />
               {errors.phoneNumber && (
-                <p className="text-red-500 text-xs mt-1">{errors.phoneNumber.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.phoneNumber.message}
+                </p>
               )}
             </div>
           </div>
@@ -190,7 +202,9 @@ export default function RegisterPage() {
               {...register("address")}
             />
             {errors.address && (
-              <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.address.message}
+              </p>
             )}
           </div>
 
@@ -218,19 +232,46 @@ export default function RegisterPage() {
                   className="absolute right-3 top-2.5 p-1 text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   {showPassword ? (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                      />
                     </svg>
                   ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
                     </svg>
                   )}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -256,40 +297,93 @@ export default function RegisterPage() {
                   className="absolute right-3 top-2.5 p-1 text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   {showConfirmPassword ? (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                      />
                     </svg>
                   ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
                     </svg>
                   )}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.confirmPassword.message}
+                </p>
               )}
             </div>
           </div>
 
           {/* Success/Error Message */}
           {msg && (
-            <div className={`rounded-lg p-3 ${msg.includes("thành công") ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}>
+            <div
+              className={`rounded-lg p-3 ${msg.includes("thành công") ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}
+            >
               <div className="flex items-start">
                 {msg.includes("thành công") ? (
-                  <svg className="w-4 h-4 text-green-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4 text-green-500 mt-0.5 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 ) : (
-                  <svg className="w-4 h-4 text-red-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4 text-red-500 mt-0.5 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 )}
                 <div className="flex-1">
-                  <p className={`text-xs ${msg.includes("thành công") ? "text-green-700" : "text-red-700"}`}>{msg}</p>
+                  <p
+                    className={`text-xs ${msg.includes("thành công") ? "text-green-700" : "text-red-700"}`}
+                  >
+                    {msg}
+                  </p>
                   {!msg.includes("thành công") && (
-                    <button type="button" onClick={() => setMsg("")} className="text-red-600 text-xs underline hover:no-underline mt-1">
+                    <button
+                      type="button"
+                      onClick={() => setMsg("")}
+                      className="text-red-600 text-xs underline hover:no-underline mt-1"
+                    >
                       Đóng
                     </button>
                   )}
@@ -312,7 +406,10 @@ export default function RegisterPage() {
         <div className="mt-4 text-center">
           <p className="text-gray-600 text-xs">
             Đã có tài khoản?{" "}
-            <Link href="/login" className="text-green-600 hover:text-green-700 font-medium hover:underline">
+            <Link
+              href="/login"
+              className="text-green-600 hover:text-green-700 font-medium hover:underline"
+            >
               Đăng nhập ngay
             </Link>
           </p>

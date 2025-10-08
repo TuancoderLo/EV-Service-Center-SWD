@@ -34,11 +34,12 @@ export const MOCK_ACCOUNTS: MockUser[] = [
     role: "admin",
     phoneNumber: "0901234567",
     address: "123 Admin Street, Quận 1, TPHCM",
-    avatar: "https://ui-avatars.com/api/?name=Admin&background=dc2626&color=fff",
-    createdAt: "2024-01-01T00:00:00.000Z"
+    avatar:
+      "https://ui-avatars.com/api/?name=Admin&background=dc2626&color=fff",
+    createdAt: "2024-01-01T00:00:00.000Z",
   },
   {
-    id: "2", 
+    id: "2",
     email: "staff@evservice.com",
     password: "123456",
     name: "Trần Thị Staff",
@@ -46,51 +47,57 @@ export const MOCK_ACCOUNTS: MockUser[] = [
     role: "staff",
     phoneNumber: "0902345678",
     address: "456 Staff Avenue, Quận 3, TPHCM",
-    avatar: "https://ui-avatars.com/api/?name=Staff&background=2563eb&color=fff",
-    createdAt: "2024-01-15T00:00:00.000Z"
+    avatar:
+      "https://ui-avatars.com/api/?name=Staff&background=2563eb&color=fff",
+    createdAt: "2024-01-15T00:00:00.000Z",
   },
   {
     id: "3",
-    email: "technician@evservice.com", 
+    email: "technician@evservice.com",
     password: "123456",
     name: "Lê Văn Technician",
     username: "technician",
     role: "technician",
     phoneNumber: "0903456789",
     address: "789 Tech Road, Quận 7, TPHCM",
-    avatar: "https://ui-avatars.com/api/?name=Technician&background=ea580c&color=fff",
-    createdAt: "2024-02-01T00:00:00.000Z"
+    avatar:
+      "https://ui-avatars.com/api/?name=Technician&background=ea580c&color=fff",
+    createdAt: "2024-02-01T00:00:00.000Z",
   },
   {
     id: "4",
     email: "member@evservice.com",
-    password: "123456", 
+    password: "123456",
     name: "Phạm Thị Member",
     username: "member",
     role: "member",
     phoneNumber: "0904567890",
     address: "321 Member Lane, Quận 2, TPHCM",
-    avatar: "https://ui-avatars.com/api/?name=Member&background=9333ea&color=fff",
-    createdAt: "2024-02-15T00:00:00.000Z"
-  }
+    avatar:
+      "https://ui-avatars.com/api/?name=Member&background=9333ea&color=fff",
+    createdAt: "2024-02-15T00:00:00.000Z",
+  },
 ];
 
 // 🔐 Mock Login Function
-export async function mockLogin(email: string, password: string): Promise<LoginResponse> {
+export async function mockLogin(
+  email: string,
+  password: string
+): Promise<LoginResponse> {
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const user = MOCK_ACCOUNTS.find(
-    account => account.email === email && account.password === password
+    (account) => account.email === email && account.password === password
   );
-  
+
   if (!user) {
     throw new Error("Email hoặc mật khẩu không đúng");
   }
-  
+
   // Generate mock JWT token
   const token = `mock-jwt-${user.id}-${Date.now()}`;
-  
+
   return {
     access_token: token,
     user: {
@@ -98,11 +105,11 @@ export async function mockLogin(email: string, password: string): Promise<LoginR
       name: user.name,
       email: user.email,
       role: user.role,
-    }
+    },
   };
 }
 
-// 📝 Mock Register Function  
+// 📝 Mock Register Function
 export async function mockRegister(payload: {
   name: string;
   email: string;
@@ -112,22 +119,26 @@ export async function mockRegister(payload: {
   address?: string;
 }): Promise<{ id: string; message: string }> {
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
   // Check if email already exists
-  const existingUser = MOCK_ACCOUNTS.find(account => account.email === payload.email);
+  const existingUser = MOCK_ACCOUNTS.find(
+    (account) => account.email === payload.email
+  );
   if (existingUser) {
     throw new Error("Email đã được sử dụng");
   }
-  
+
   // Check if username already exists (if provided)
   if (payload.username) {
-    const existingUsername = MOCK_ACCOUNTS.find(account => account.username === payload.username);
+    const existingUsername = MOCK_ACCOUNTS.find(
+      (account) => account.username === payload.username
+    );
     if (existingUsername) {
       throw new Error("Username đã được sử dụng");
     }
   }
-  
+
   // Mock success response
   const newUser: MockUser = {
     id: `user-${Date.now()}`,
@@ -139,15 +150,15 @@ export async function mockRegister(payload: {
     phoneNumber: payload.phoneNumber || "",
     address: payload.address || "",
     avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(payload.name)}&background=random`,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   };
-  
+
   // Add to mock database (in real app, this would be saved to database)
   MOCK_ACCOUNTS.push(newUser);
-  
+
   return {
     id: newUser.id,
-    message: "Đăng ký thành công! Bạn có thể đăng nhập ngay."
+    message: "Đăng ký thành công! Bạn có thể đăng nhập ngay.",
   };
 }
 
@@ -159,22 +170,22 @@ export async function mockMe(token: string): Promise<{
   role: Role;
 }> {
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   if (!token || !token.startsWith("mock-jwt-")) {
     throw new Error("Token không hợp lệ");
   }
-  
+
   // Extract user ID from token (in real app, decode JWT)
   const tokenParts = token.split("-");
   const userId = tokenParts[2];
-  
-  const user = MOCK_ACCOUNTS.find(account => account.id === userId);
-  
+
+  const user = MOCK_ACCOUNTS.find((account) => account.id === userId);
+
   if (!user) {
     throw new Error("Token không hợp lệ hoặc đã hết hạn");
   }
-  
+
   return {
     id: user.id,
     name: user.name,
@@ -184,42 +195,50 @@ export async function mockMe(token: string): Promise<{
 }
 
 // 🔄 Mock Forgot Password
-export async function mockForgotPassword(email: string): Promise<{ message: string }> {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  const user = MOCK_ACCOUNTS.find(account => account.email === email);
-  
+export async function mockForgotPassword(
+  email: string
+): Promise<{ message: string }> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const user = MOCK_ACCOUNTS.find((account) => account.email === email);
+
   if (!user) {
     throw new Error("Email không tồn tại trong hệ thống");
   }
-  
+
   return {
-    message: `Liên kết đặt lại mật khẩu đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`
+    message: `Liên kết đặt lại mật khẩu đã được gửi đến ${email}. Vui lòng kiểm tra email của bạn.`,
   };
 }
 
 // 🔑 Mock Reset Password
-export async function mockResetPassword(token: string, newPassword: string): Promise<{ message: string }> {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+export async function mockResetPassword(
+  token: string,
+  newPassword: string
+): Promise<{ message: string }> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   // In real app, validate reset token
   if (!token) {
     throw new Error("Token không hợp lệ");
   }
-  
+
   if (newPassword.length < 6) {
     throw new Error("Mật khẩu phải có ít nhất 6 ký tự");
   }
-  
+
   return {
-    message: "Mật khẩu đã được đặt lại thành công. Bạn có thể đăng nhập với mật khẩu mới."
+    message:
+      "Mật khẩu đã được đặt lại thành công. Bạn có thể đăng nhập với mật khẩu mới.",
   };
 }
 
 // 📊 Mock Statistics (for dashboards)
-export async function mockGetStats(role: Role): Promise<Record<string, unknown>> {
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
+export async function mockGetStats(
+  role: Role
+): Promise<Record<string, unknown>> {
+  await new Promise((resolve) => setTimeout(resolve, 800));
+
   switch (role) {
     case "admin":
       return {
@@ -232,36 +251,36 @@ export async function mockGetStats(role: Role): Promise<Record<string, unknown>>
         systemHealth: 98.5,
         apiCalls: 15420,
         responseTime: 120,
-        errorRate: 0.2
+        errorRate: 0.2,
       };
-    
+
     case "staff":
       return {
         managedTechnicians: 8,
         activeTasks: 12,
         completedTasks: 45,
         pendingAssignments: 3,
-        teamPerformance: 92.5
+        teamPerformance: 92.5,
       };
-    
+
     case "technician":
       return {
         todayTasks: 3,
         weeklyCompleted: 18,
         averageRating: 4.8,
         toolsAvailable: 12,
-        workingHours: 8.5
+        workingHours: 8.5,
       };
-    
+
     case "member":
       return {
         myVehicles: 2,
         upcomingServices: 1,
         loyaltyPoints: 1250,
         totalSpent: 15500000,
-        lastServiceDate: "2024-09-15"
+        lastServiceDate: "2024-09-15",
       };
-    
+
     default:
       return {};
   }
@@ -269,8 +288,8 @@ export async function mockGetStats(role: Role): Promise<Record<string, unknown>>
 
 // 🚗 Mock Vehicles (for member dashboard)
 export async function mockGetVehicles(_userId: string) {
-  await new Promise(resolve => setTimeout(resolve, 600));
-  
+  await new Promise((resolve) => setTimeout(resolve, 600));
+
   return [
     {
       id: "vehicle-1",
@@ -280,17 +299,17 @@ export async function mockGetVehicles(_userId: string) {
       status: "active",
       batteryHealth: 95,
       lastService: "2024-08-15",
-      nextService: "2024-11-15"
+      nextService: "2024-11-15",
     },
     {
-      id: "vehicle-2", 
+      id: "vehicle-2",
       model: "VinFast VF8",
       licensePlate: "51G-67890",
       year: 2023,
       status: "in_service",
       batteryHealth: 88,
       lastService: "2024-09-20",
-      nextService: "2024-12-20"
-    }
+      nextService: "2024-12-20",
+    },
   ];
 }
