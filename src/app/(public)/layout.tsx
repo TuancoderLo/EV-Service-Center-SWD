@@ -7,9 +7,9 @@ export default function PublicLayout({
 }) {
   return (
     <div className="min-h-screen">
-      {/* ✅ CÓ navbar cho public pages */}
+      {/* ✅ Navbar overlay trên hero section */}
       <Navbar />
-      <main className="p-4">{children}</main>
+      <main>{children}</main>
       {/* TODO: Add Footer component */}
     </div>
   );
