@@ -16,28 +16,20 @@ const menuItems: MenuItem[] = [
     label: "Dashboard",
   },
   {
-    href: "/admin/users",
-    label: "Quản lý Users",
+    href: "/admin/manager-users",
+    label: "Manager Users",
   },
   {
-    href: "/admin/roles",
-    label: "Quản lý Roles",
+    href: "/admin/manager-bookings",
+    label: "Manager Bookings",
   },
   {
-    href: "/admin/bookings",
-    label: "Quản lý Bookings",
+    href: "/admin/manager-inventory",
+    label: "Manager Inventory",
   },
   {
-    href: "/admin/inventory",
-    label: "Quản lý Kho",
-  },
-  {
-    href: "/admin/reports",
-    label: "Báo cáo",
-  },
-  {
-    href: "/admin/settings",
-    label: "Cài đặt",
+    href: "/admin/manager-revenue",
+    label: "Manager Revenue",
   },
 ];
 
@@ -45,7 +37,7 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
+    <aside className="w-64 flex-shrink-0 bg-white border-r border-gray-200 min-h-screen">
       <div className="p-6">
         {/* Sidebar Header */}
         <div className="mb-6">
