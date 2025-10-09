@@ -4,57 +4,40 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 
 interface MenuItem {
   href: string;
   label: string;
-  icon: string;
-  description?: string;
 }
 
 const menuItems: MenuItem[] = [
   {
     href: "/admin/dashboard",
     label: "Dashboard",
-    icon: "📊",
-    description: "Tổng quan hệ thống",
   },
   {
     href: "/admin/users",
     label: "Quản lý Users",
-    icon: "👥",
-    description: "Quản lý người dùng",
   },
   {
     href: "/admin/roles",
     label: "Quản lý Roles",
-    icon: "🛡️",
-    description: "Phân quyền hệ thống",
   },
   {
     href: "/admin/bookings",
     label: "Quản lý Bookings",
-    icon: "📅",
-    description: "Lịch hẹn dịch vụ",
   },
   {
     href: "/admin/inventory",
     label: "Quản lý Kho",
-    icon: "📦",
-    description: "Phụ tùng & vật tư",
   },
   {
     href: "/admin/reports",
     label: "Báo cáo",
-    icon: "📈",
-    description: "Thống kê & báo cáo",
   },
   {
     href: "/admin/settings",
     label: "Cài đặt",
-    icon: "⚙️",
-    description: "Cấu hình hệ thống",
   },
 ];
 
@@ -62,53 +45,41 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-card shadow-sm min-h-screen border-r">
-      <div className="p-4">
+    <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
+      <div className="p-6">
         {/* Sidebar Header */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-1">Admin Panel</h2>
-          <p className="text-xs text-muted-foreground">
-            Quản trị hệ thống EV Service
-          </p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-1">
+            Admin Panel
+          </h2>
+          <p className="text-sm text-gray-500">Quản trị hệ thống</p>
         </div>
 
         {/* Navigation Menu */}
-        <nav>
-          <ul className="space-y-1">
-            {menuItems.map((item) => {
-              const isActive = pathname === item.href;
+        <nav className="space-y-1">
+          {menuItems.map((item) => {
+            const isActive = pathname === item.href;
 
-              return (
-                <li key={item.href}>
-                  <Button
-                    asChild
-                    variant={isActive ? "secondary" : "ghost"}
-                    className={cn(
-                      "w-full justify-start h-auto p-3 transition-all duration-200",
-                      isActive && "bg-accent text-accent-foreground shadow-sm"
-                    )}
-                  >
-                    <Link href={item.href}>
-                      <span className="mr-3 text-lg">{item.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium">{item.label}</div>
-                        {item.description && (
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            {item.description}
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  </Button>
-                </li>
-              );
-            })}
-          </ul>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "block px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-gray-100 text-gray-900"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="mt-8 pt-4 border-t border-border">
-          <div className="text-xs text-muted-foreground space-y-1">
+        <div className="mt-8 pt-4 border-t border-gray-200">
+          <div className="text-xs text-gray-500">
             <div>EV Service Center</div>
             <div>Admin Panel v1.0</div>
           </div>
