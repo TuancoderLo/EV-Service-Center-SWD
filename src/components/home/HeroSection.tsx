@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useAuthStore } from "@/stores/auth";
 
 export default function HeroSection() {
@@ -20,83 +23,101 @@ export default function HeroSection() {
           {/* Left Content */}
           <div className="text-white space-y-8">
             <div className="space-y-2">
-              <p className="text-green-400 font-medium tracking-wider uppercase text-sm">
+              <Badge
+                variant="secondary"
+                className="bg-primary/20 text-primary border-primary/30"
+              >
                 DESIGN SMARTER, NOT HARDER
-              </p>
+              </Badge>
               <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                <span className="text-green-400">EV Service</span> will
+                <span className="text-primary">EV Service</span> will
                 <br />
                 take you places
                 <br />
-                <span className="text-white">technology can't</span>
+                <span className="text-white">technology can&apos;t</span>
               </h1>
             </div>
 
             <p className="text-xl text-gray-300 max-w-lg leading-relaxed">
-              Trung tâm bảo dưỡng xe điện tiên tiến với công nghệ AI và đội ngũ 
-              kỹ thuật viên chuyên nghiệp. Nơi công nghệ gặp gỡ sự chăm sóc tận tâm.
+              Trung tâm bảo dưỡng xe điện tiên tiến với công nghệ AI và đội ngũ
+              kỹ thuật viên chuyên nghiệp. Nơi công nghệ gặp gỡ sự chăm sóc tận
+              tâm.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               {!user ? (
                 <>
-                  <Link
-                    href="/register"
-                    className="bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-white text-gray-900 hover:bg-gray-100 rounded-full px-8"
                   >
-                    Schedule a Demo
-                  </Link>
-                  <Link
-                    href="/login"
-                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300 inline-flex items-center justify-center"
+                    <Link href="/register">Schedule a Demo</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="border-white text-white hover:bg-white hover:text-gray-900 rounded-full px-8"
                   >
-                    Contact Sales
-                  </Link>
+                    <Link href="/login">Contact Sales</Link>
+                  </Button>
                 </>
-              ) : user.role === 'member' ? (
+              ) : user.role === "member" ? (
                 <>
-                  <Link
-                    href="/member/dashboard"
-                    className="bg-green-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 rounded-full px-8"
                   >
-                    📊 My Dashboard
-                  </Link>
-                  <Link
-                    href="#services"
-                    className="border-2 border-green-500 text-green-500 px-8 py-4 rounded-full font-semibold hover:bg-green-500 hover:text-white transition-all duration-300 inline-flex items-center justify-center"
+                    <Link href="/member/dashboard">📊 My Dashboard</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="border-primary text-primary hover:bg-primary hover:text-white rounded-full px-8"
                   >
-                    🔧 Book Service
-                  </Link>
+                    <Link href="#services">🔧 Book Service</Link>
+                  </Button>
                 </>
               ) : (
                 <>
-                  <Link
-                    href={`/${user.role}/dashboard`}
-                    className="bg-green-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-600 transition-all duration-300 transform hover:scale-105"
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 rounded-full px-8"
                   >
-                    📊 Go to Dashboard
-                  </Link>
-                  <Link
-                    href="#services"
-                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300"
+                    <Link href={`/${user.role}/dashboard`}>
+                      📊 Go to Dashboard
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="border-white text-white hover:bg-white hover:text-gray-900 rounded-full px-8"
                   >
-                    🔧 View Services
-                  </Link>
+                    <Link href="#services">🔧 View Services</Link>
+                  </Button>
                 </>
               )}
             </div>
 
             {/* Welcome Message for Logged Users */}
             {user && (
-              <div className="mt-8 p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
-                <p className="text-green-400 text-lg">
-                  👋 Welcome back, <span className="font-bold text-white">{user.name}</span>! 
-                </p>
-                <p className="text-gray-300 mt-1">
-                  Ready to experience the future of EV service?
-                </p>
-              </div>
+              <Card className="mt-8 bg-white/10 backdrop-blur-sm border-white/20">
+                <CardContent className="p-6">
+                  <p className="text-primary text-lg">
+                    👋 Welcome back,{" "}
+                    <span className="font-bold text-white">{user.name}</span>!
+                  </p>
+                  <p className="text-gray-300 mt-1">
+                    Ready to experience the future of EV service?
+                  </p>
+                </CardContent>
+              </Card>
             )}
           </div>
 
@@ -119,7 +140,9 @@ export default function HeroSection() {
                           <div className="h-2 bg-gray-700 rounded-full"></div>
                           <div className="h-2 bg-gray-700 rounded-full w-3/4"></div>
                         </div>
-                        <div className="text-green-400 text-sm">Battery: 95%</div>
+                        <div className="text-green-400 text-sm">
+                          Battery: 95%
+                        </div>
                       </div>
                     </div>
                   </div>

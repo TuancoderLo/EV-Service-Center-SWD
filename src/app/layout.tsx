@@ -1,19 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 // 👇 import thêm phần Providers (bỏ Navbar)
 import Providers from "@/lib/providers";
 import ErrorBoundary from "@/components/ui/ErrorBoundary";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -28,9 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.variable} font-sans antialiased`}>
         {/* Bọc toàn bộ app trong React Query Provider */}
         <Providers>
           <ErrorBoundary>
