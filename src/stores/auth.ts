@@ -8,6 +8,7 @@ type AuthState = {
   isLoading: boolean;
   isInitialized: boolean;
   setAuth: (_user: User, _token: string | null) => void;
+  logout: () => void;
   clear: () => void;
   initialize: () => void;
   setLoading: (_loading: boolean) => void;
@@ -34,6 +35,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
     }
     set({ user, token, isInitialized: true });
+  },
+
+  logout: () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("auth_token"); // For mock API
+      document.cookie =
+        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    set({ user: null, token: null, isInitialized: true });
   },
 
   clear: () => {
