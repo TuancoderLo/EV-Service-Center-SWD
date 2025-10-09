@@ -2,6 +2,16 @@
 
 import { useState, useEffect } from "react";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -23,126 +33,148 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
-        <p className="text-gray-600">Quản lý toàn bộ hệ thống EV Service Center</p>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard Admin</h1>
+          <p className="text-muted-foreground">
+            Quản lý toàn bộ hệ thống EV Service Center
+          </p>
+        </div>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-3 bg-blue-100 rounded-full">
-              <span className="text-2xl">👥</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Tổng Users</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalUsers}</p>
-            </div>
-          </div>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Tổng Users</CardTitle>
+            <span className="text-2xl">👥</span>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.totalUsers}</div>
+            <p className="text-xs text-muted-foreground">+12% từ tháng trước</p>
+          </CardContent>
+        </Card>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-3 bg-green-100 rounded-full">
-              <span className="text-2xl">👔</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Staff</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalStaff}</p>
-            </div>
-          </div>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Staff</CardTitle>
+            <span className="text-2xl">👔</span>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.totalStaff}</div>
+            <p className="text-xs text-muted-foreground">+2 nhân viên mới</p>
+          </CardContent>
+        </Card>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-3 bg-orange-100 rounded-full">
-              <span className="text-2xl">🔧</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Technicians</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalTechnicians}</p>
-            </div>
-          </div>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Technicians</CardTitle>
+            <span className="text-2xl">🔧</span>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.totalTechnicians}</div>
+            <p className="text-xs text-muted-foreground">+1 kỹ thuật viên</p>
+          </CardContent>
+        </Card>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-3 bg-purple-100 rounded-full">
-              <span className="text-2xl">🚗</span>
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Khách hàng</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalMembers}</p>
-            </div>
-          </div>
-        </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Khách hàng</CardTitle>
+            <span className="text-2xl">🚗</span>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.totalMembers}</div>
+            <p className="text-xs text-muted-foreground">+8% khách hàng mới</p>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick Actions & Recent Activities */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Thao tác nhanh</h3>
-          <div className="space-y-3">
-            <button className="w-full text-left p-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
-              <div className="flex items-center">
-                <span className="text-xl mr-3">➕</span>
-                <div>
-                  <p className="font-medium">Tạo tài khoản mới</p>
-                  <p className="text-sm text-gray-600">Thêm user vào hệ thống</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>Thao tác nhanh</CardTitle>
+            <CardDescription>
+              Các chức năng quản trị thường dùng
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Button
+              variant="outline"
+              className="w-full justify-start h-auto p-4"
+            >
+              <span className="text-xl mr-3">➕</span>
+              <div className="text-left">
+                <div className="font-medium">Tạo tài khoản mới</div>
+                <div className="text-sm text-muted-foreground">
+                  Thêm user vào hệ thống
                 </div>
               </div>
-            </button>
-            
-            <button className="w-full text-left p-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
-              <div className="flex items-center">
-                <span className="text-xl mr-3">📊</span>
-                <div>
-                  <p className="font-medium">Xem báo cáo</p>
-                  <p className="text-sm text-gray-600">Thống kê hoạt động</p>
-                </div>
-              </div>
-            </button>
+            </Button>
 
-            <button className="w-full text-left p-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
-              <div className="flex items-center">
-                <span className="text-xl mr-3">⚙️</span>
-                <div>
-                  <p className="font-medium">Cài đặt hệ thống</p>
-                  <p className="text-sm text-gray-600">Cấu hình toàn hệ thống</p>
+            <Button
+              variant="outline"
+              className="w-full justify-start h-auto p-4"
+            >
+              <span className="text-xl mr-3">📊</span>
+              <div className="text-left">
+                <div className="font-medium">Xem báo cáo</div>
+                <div className="text-sm text-muted-foreground">
+                  Thống kê hoạt động
                 </div>
               </div>
-            </button>
-          </div>
-        </div>
+            </Button>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Hoạt động gần đây</h3>
-          <div className="space-y-3">
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+            <Button
+              variant="outline"
+              className="w-full justify-start h-auto p-4"
+            >
+              <span className="text-xl mr-3">⚙️</span>
+              <div className="text-left">
+                <div className="font-medium">Cài đặt hệ thống</div>
+                <div className="text-sm text-muted-foreground">
+                  Cấu hình toàn hệ thống
+                </div>
+              </div>
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Hoạt động gần đây</CardTitle>
+            <CardDescription>Theo dõi các hoạt động mới nhất</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center p-3 rounded-lg border">
               <span className="text-lg mr-3">🟢</span>
-              <div>
+              <div className="flex-1">
                 <p className="text-sm font-medium">User mới đăng ký</p>
-                <p className="text-xs text-gray-600">2 phút trước</p>
+                <p className="text-xs text-muted-foreground">2 phút trước</p>
               </div>
-            </div>
-            
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-lg mr-3">🔄</span>
-              <div>
-                <p className="text-sm font-medium">Technician cập nhật trạng thái</p>
-                <p className="text-xs text-gray-600">5 phút trước</p>
-              </div>
+              <Badge variant="outline">Mới</Badge>
             </div>
 
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <span className="text-lg mr-3">📝</span>
-              <div>
-                <p className="text-sm font-medium">Staff tạo booking mới</p>
-                <p className="text-xs text-gray-600">10 phút trước</p>
+            <div className="flex items-center p-3 rounded-lg border">
+              <span className="text-lg mr-3">🔄</span>
+              <div className="flex-1">
+                <p className="text-sm font-medium">
+                  Technician cập nhật trạng thái
+                </p>
+                <p className="text-xs text-muted-foreground">5 phút trước</p>
               </div>
+              <Badge variant="secondary">Cập nhật</Badge>
             </div>
-          </div>
-        </div>
+
+            <div className="flex items-center p-3 rounded-lg border">
+              <span className="text-lg mr-3">📝</span>
+              <div className="flex-1">
+                <p className="text-sm font-medium">Staff tạo booking mới</p>
+                <p className="text-xs text-muted-foreground">10 phút trước</p>
+              </div>
+              <Badge>Hoàn thành</Badge>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

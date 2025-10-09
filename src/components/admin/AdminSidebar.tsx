@@ -3,6 +3,9 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+
 interface MenuItem {
   href: string;
   label: string;
@@ -59,14 +62,14 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-white shadow-sm min-h-screen border-r border-gray-200">
+    <aside className="w-64 bg-card shadow-sm min-h-screen border-r">
       <div className="p-4">
         {/* Sidebar Header */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-1">
-            Admin Panel
-          </h2>
-          <p className="text-xs text-gray-500">Quản trị hệ thống EV Service</p>
+          <h2 className="text-lg font-semibold mb-1">Admin Panel</h2>
+          <p className="text-xs text-muted-foreground">
+            Quản trị hệ thống EV Service
+          </p>
         </div>
 
         {/* Navigation Menu */}
@@ -77,48 +80,26 @@ export default function AdminSidebar() {
 
               return (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`
-                      group flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                      ${
-                        isActive
-                          ? "bg-red-50 text-red-700 shadow-sm border-l-4 border-red-500"
-                          : "text-gray-700 hover:bg-red-50 hover:text-red-600"
-                      }
-                    `}
-                  >
-                    {/* Icon */}
-                    <span
-                      className={`
-                      mr-3 text-lg
-                      ${isActive ? "scale-110" : "group-hover:scale-110"}
-                      transition-transform duration-200
-                    `}
-                    >
-                      {item.icon}
-                    </span>
-
-                    {/* Label & Description */}
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium truncate">{item.label}</div>
-                      {item.description && (
-                        <div
-                          className={`
-                          text-xs mt-0.5 truncate
-                          ${isActive ? "text-red-600" : "text-gray-500 group-hover:text-red-500"}
-                        `}
-                        >
-                          {item.description}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Active Indicator */}
-                    {isActive && (
-                      <div className="w-2 h-2 bg-red-500 rounded-full ml-2"></div>
+                  <Button
+                    asChild
+                    variant={isActive ? "secondary" : "ghost"}
+                    className={cn(
+                      "w-full justify-start h-auto p-3 transition-all duration-200",
+                      isActive && "bg-accent text-accent-foreground shadow-sm"
                     )}
-                  </Link>
+                  >
+                    <Link href={item.href}>
+                      <span className="mr-3 text-lg">{item.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium">{item.label}</div>
+                        {item.description && (
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            {item.description}
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  </Button>
                 </li>
               );
             })}
@@ -126,8 +107,8 @@ export default function AdminSidebar() {
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="mt-8 pt-4 border-t border-gray-200">
-          <div className="text-xs text-gray-500 space-y-1">
+        <div className="mt-8 pt-4 border-t border-border">
+          <div className="text-xs text-muted-foreground space-y-1">
             <div>EV Service Center</div>
             <div>Admin Panel v1.0</div>
           </div>

@@ -35,7 +35,7 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Admin Navbar */}
       <AdminNavbar />
 
@@ -44,7 +44,7 @@ export default function AdminLayout({
         <AdminSidebar />
 
         {/* Main Content */}
-        <main className="flex-1 p-6 bg-gray-50">{children}</main>
+        <main className="flex-1 p-6 bg-background">{children}</main>
       </div>
     </div>
   );
