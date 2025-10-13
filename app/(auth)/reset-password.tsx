@@ -55,6 +55,14 @@ export default function ResetPasswordScreen() {
               >
                 Go to Login
               </Button>
+
+              <Button
+                mode="text"
+                onPress={() => router.push("/")}
+                style={styles.homeButton}
+              >
+                Back to Home
+              </Button>
             </Card.Content>
           </Card>
         </View>
@@ -126,6 +134,14 @@ export default function ResetPasswordScreen() {
               >
                 Back to Login
               </Button>
+
+              <Button
+                mode="text"
+                onPress={() => router.push("/")}
+                style={styles.homeButton}
+              >
+                Back to Home
+              </Button>
             </Card.Content>
           </Card>
         </View>
@@ -186,5 +202,8 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 16,
+  },
+  homeButton: {
+    marginTop: 8,
   },
 });

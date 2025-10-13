@@ -114,6 +114,16 @@ export default function RegisterScreen() {
                   Login
                 </Button>
               </View>
+
+              <Divider style={styles.divider} />
+
+              <Button
+                mode="text"
+                onPress={() => router.push("/")}
+                style={styles.homeButton}
+              >
+                Back to Home
+              </Button>
             </Card.Content>
           </Card>
         </View>
@@ -173,5 +183,8 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "100%",
+  },
+  homeButton: {
+    marginTop: 8,
   },
 });

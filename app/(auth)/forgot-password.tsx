@@ -63,6 +63,14 @@ export default function ForgotPasswordScreen() {
               >
                 Back to Login
               </Button>
+
+              <Button
+                mode="text"
+                onPress={() => router.push("/")}
+                style={styles.homeButton}
+              >
+                Back to Home
+              </Button>
             </Card.Content>
           </Card>
         </View>
@@ -112,6 +120,14 @@ export default function ForgotPasswordScreen() {
                 style={styles.button}
               >
                 Back to Login
+              </Button>
+
+              <Button
+                mode="text"
+                onPress={() => router.push("/")}
+                style={styles.homeButton}
+              >
+                Back to Home
               </Button>
             </Card.Content>
           </Card>
@@ -172,5 +188,8 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 16,
+  },
+  homeButton: {
+    marginTop: 8,
   },
 });
