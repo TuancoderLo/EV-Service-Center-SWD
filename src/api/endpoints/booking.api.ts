@@ -3,15 +3,15 @@
  * Handle booking creation, management, and history
  */
 
-import { httpClient } from '../client';
-import { USE_MOCK_DATA } from '../config';
-import { normalizeHttpError } from '@/src/utils/http-error';
+import { normalizeHttpError } from "@/src/utils/http-error";
+import { httpClient } from "../client";
+import { USE_MOCK_DATA } from "../config";
 
 // Type definitions
 export interface Booking {
   id: string;
   userId: string;
-  serviceType: 'maintenance' | 'repair' | 'inspection' | 'charging';
+  serviceType: "maintenance" | "repair" | "inspection" | "charging";
   vehicleInfo: {
     make: string;
     model: string;
@@ -20,7 +20,7 @@ export interface Booking {
   };
   scheduledDate: string;
   scheduledTime: string;
-  status: 'pending' | 'confirmed' | 'in-progress' | 'completed' | 'cancelled';
+  status: "pending" | "confirmed" | "in-progress" | "completed" | "cancelled";
   description?: string;
   estimatedDuration: number; // in minutes
   assignedTechnician?: string;
@@ -29,8 +29,8 @@ export interface Booking {
 }
 
 export interface CreateBookingRequest {
-  serviceType: Booking['serviceType'];
-  vehicleInfo: Booking['vehicleInfo'];
+  serviceType: Booking["serviceType"];
+  vehicleInfo: Booking["vehicleInfo"];
   scheduledDate: string;
   scheduledTime: string;
   description?: string;
@@ -39,23 +39,23 @@ export interface CreateBookingRequest {
 // Mock data
 const MOCK_BOOKINGS: Booking[] = [
   {
-    id: '1',
-    userId: '2', // member
-    serviceType: 'maintenance',
+    id: "1",
+    userId: "2", // member
+    serviceType: "maintenance",
     vehicleInfo: {
-      make: 'Tesla',
-      model: 'Model 3',
+      make: "Tesla",
+      model: "Model 3",
       year: 2022,
-      licensePlate: 'ABC-123',
+      licensePlate: "ABC-123",
     },
-    scheduledDate: '2025-10-20',
-    scheduledTime: '10:00',
-    status: 'confirmed',
-    description: 'Regular maintenance check',
+    scheduledDate: "2025-10-20",
+    scheduledTime: "10:00",
+    status: "confirmed",
+    description: "Regular maintenance check",
     estimatedDuration: 120,
-    assignedTechnician: 'John Doe',
-    createdAt: '2025-10-14T08:00:00Z',
-    updatedAt: '2025-10-14T09:00:00Z',
+    assignedTechnician: "John Doe",
+    createdAt: "2025-10-14T08:00:00Z",
+    updatedAt: "2025-10-14T09:00:00Z",
   },
 ];
 
@@ -67,11 +67,11 @@ export const bookingApi = {
   getBookings: async (): Promise<Booking[]> => {
     try {
       if (USE_MOCK_DATA) {
-        await new Promise(resolve => setTimeout(resolve, 800));
+        await new Promise((resolve) => setTimeout(resolve, 800));
         return MOCK_BOOKINGS;
       }
-      
-      const response = await httpClient.get<Booking[]>('/bookings');
+
+      const response = await httpClient.get<Booking[]>("/bookings");
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
@@ -84,14 +84,14 @@ export const bookingApi = {
   getBookingById: async (id: string): Promise<Booking> => {
     try {
       if (USE_MOCK_DATA) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const booking = MOCK_BOOKINGS.find(b => b.id === id);
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        const booking = MOCK_BOOKINGS.find((b) => b.id === id);
         if (!booking) {
-          throw new Error('Booking not found');
+          throw new Error("Booking not found");
         }
         return booking;
       }
-      
+
       const response = await httpClient.get<Booking>(`/bookings/${id}`);
       return response.data;
     } catch (error) {
@@ -105,22 +105,22 @@ export const bookingApi = {
   createBooking: async (data: CreateBookingRequest): Promise<Booking> => {
     try {
       if (USE_MOCK_DATA) {
-        await new Promise(resolve => setTimeout(resolve, 1200));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+
         const newBooking: Booking = {
           id: Date.now().toString(),
-          userId: '2', // Mock current user
+          userId: "2", // Mock current user
           ...data,
-          status: 'pending',
+          status: "pending",
           estimatedDuration: 90, // Default duration
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };
-        
+
         return newBooking;
       }
-      
-      const response = await httpClient.post<Booking>('/bookings', data);
+
+      const response = await httpClient.post<Booking>("/bookings", data);
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
@@ -130,23 +130,26 @@ export const bookingApi = {
   /**
    * Update booking
    */
-  updateBooking: async (id: string, data: Partial<CreateBookingRequest>): Promise<Booking> => {
+  updateBooking: async (
+    id: string,
+    data: Partial<CreateBookingRequest>
+  ): Promise<Booking> => {
     try {
       if (USE_MOCK_DATA) {
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        const booking = MOCK_BOOKINGS.find(b => b.id === id);
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        const booking = MOCK_BOOKINGS.find((b) => b.id === id);
         if (!booking) {
-          throw new Error('Booking not found');
+          throw new Error("Booking not found");
         }
-        
+
         return {
           ...booking,
           ...data,
           updatedAt: new Date().toISOString(),
         };
       }
-      
+
       const response = await httpClient.put<Booking>(`/bookings/${id}`, data);
       return response.data;
     } catch (error) {
@@ -160,10 +163,10 @@ export const bookingApi = {
   cancelBooking: async (id: string): Promise<void> => {
     try {
       if (USE_MOCK_DATA) {
-        await new Promise(resolve => setTimeout(resolve, 600));
+        await new Promise((resolve) => setTimeout(resolve, 600));
         return;
       }
-      
+
       await httpClient.delete(`/bookings/${id}`);
     } catch (error) {
       throw normalizeHttpError(error);

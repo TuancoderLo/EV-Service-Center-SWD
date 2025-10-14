@@ -1,4 +1,4 @@
-import { mockLogin, useAuthStore } from "@/src/store/authStore";
+import { useLogin } from "@/src/features/auth/useLogin";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
@@ -16,9 +16,9 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useAuthStore();
+  // Use login hook instead of direct store access
+  const { login, isLoading, error, clearError } = useLogin();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -26,37 +26,17 @@ export default function LoginScreen() {
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      const { token, user } = await mockLogin(email, password);
-      login(token, user);
+      // Clear any previous errors
+      clearError();
 
-      // Navigate to the appropriate dashboard based on role
-      switch (user.role) {
-        case "admin":
-          router.replace("/admin");
-          break;
-        case "member":
-          router.replace("/member");
-          break;
-        case "staff":
-          router.replace("/staff");
-          break;
-        case "technician":
-          router.replace("/technician");
-          break;
-        default:
-          router.replace("/");
-          break;
-      }
+      // Call login hook which will handle API call, store update, and navigation
+      await login({ email, password });
     } catch (error) {
       Alert.alert(
         "Login Failed",
         error instanceof Error ? error.message : "Invalid credentials"
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -84,6 +64,14 @@ export default function LoginScreen() {
                   </Paragraph>
                 </Card.Content>
               </Card>
+
+              {error && (
+                <Card style={styles.errorCard}>
+                  <Card.Content>
+                    <Paragraph style={styles.errorText}>{error}</Paragraph>
+                  </Card.Content>
+                </Card>
+              )}
 
               <View style={styles.inputContainer}>
                 <TextInput
@@ -233,5 +221,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#424242",
     fontFamily: "monospace",
+  },
+  errorCard: {
+    backgroundColor: "#FFEBEE",
+    marginBottom: 16,
+    elevation: 1,
+  },
+  errorText: {
+    color: "#C62828",
+    fontSize: 14,
   },
 });

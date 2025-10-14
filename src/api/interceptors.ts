@@ -3,9 +3,9 @@
  * Handle authentication tokens, refresh tokens, and common request/response logic
  */
 
-import { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
-import apiClient from './client';
-import { useAuthStore } from '@/src/store/authStore';
+import { useAuthStore } from "@/src/store/authStore";
+import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import apiClient from "./client";
 
 // Token management
 let isRefreshing = false;
@@ -22,7 +22,7 @@ const processQueue = (error: any, token: string | null = null) => {
       resolve(token);
     }
   });
-  
+
   failedQueue = [];
 };
 
@@ -31,11 +31,11 @@ export const setupRequestInterceptor = () => {
   apiClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       const { accessToken } = useAuthStore.getState();
-      
+
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
-      
+
       return config;
     },
     (error: AxiosError) => {
@@ -51,24 +51,28 @@ export const setupResponseInterceptor = () => {
       return response;
     },
     async (error: AxiosError) => {
-      const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-      
+      const originalRequest = error.config as InternalAxiosRequestConfig & {
+        _retry?: boolean;
+      };
+
       // Handle 401 Unauthorized - Token expired
       if (error.response?.status === 401 && !originalRequest._retry) {
         if (isRefreshing) {
           // If already refreshing, queue this request
           return new Promise((resolve, reject) => {
             failedQueue.push({ resolve, reject });
-          }).then(() => {
-            return apiClient(originalRequest);
-          }).catch(err => {
-            return Promise.reject(err);
-          });
+          })
+            .then(() => {
+              return apiClient(originalRequest);
+            })
+            .catch((err) => {
+              return Promise.reject(err);
+            });
         }
-        
+
         originalRequest._retry = true;
         isRefreshing = true;
-        
+
         try {
           // TODO: Implement refresh token logic
           // const newToken = await refreshAuthToken();
@@ -76,12 +80,12 @@ export const setupResponseInterceptor = () => {
           // setToken(newToken);
           // processQueue(null, newToken);
           // return apiClient(originalRequest);
-          
+
           // For now, just logout user
           const { logout } = useAuthStore.getState();
           logout();
           processQueue(error, null);
-          
+
           return Promise.reject(error);
         } catch (refreshError) {
           processQueue(refreshError, null);
@@ -92,7 +96,7 @@ export const setupResponseInterceptor = () => {
           isRefreshing = false;
         }
       }
-      
+
       // Handle other HTTP errors
       return Promise.reject(error);
     }
@@ -107,8 +111,8 @@ const refreshAuthToken = async (): Promise<string> => {
   //   refreshToken: getRefreshToken()
   // });
   // return response.data.accessToken;
-  
-  throw new Error('Refresh token not implemented yet');
+
+  throw new Error("Refresh token not implemented yet");
 };
 
 // Initialize interceptors

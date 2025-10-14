@@ -3,9 +3,9 @@
  * Handle login, logout, register, and user management
  */
 
-import { httpClient } from '../client';
-import { USE_MOCK_DATA } from '../config';
-import { normalizeHttpError } from '@/src/utils/http-error';
+import { normalizeHttpError } from "@/src/utils/http-error";
+import { httpClient } from "../client";
+import { USE_MOCK_DATA } from "../config";
 
 // Type definitions
 export interface LoginRequest {
@@ -20,7 +20,7 @@ export interface LoginResponse {
     id: string;
     email: string;
     fullName: string;
-    role: 'admin' | 'member' | 'staff' | 'technician';
+    role: "admin" | "member" | "staff" | "technician";
     avatar?: string;
   };
 }
@@ -54,32 +54,32 @@ export interface ResetPasswordRequest {
 // Mock data
 const MOCK_USERS = [
   {
-    id: '1',
-    email: 'admin@test.com',
-    password: '123456',
-    fullName: 'Admin User',
-    role: 'admin' as const,
+    id: "1",
+    email: "admin@test.com",
+    password: "123456",
+    fullName: "Admin User",
+    role: "admin" as const,
   },
   {
-    id: '2',
-    email: 'member@test.com',
-    password: '123456',
-    fullName: 'Member User',
-    role: 'member' as const,
+    id: "2",
+    email: "member@test.com",
+    password: "123456",
+    fullName: "Member User",
+    role: "member" as const,
   },
   {
-    id: '3',
-    email: 'staff@test.com',
-    password: '123456',
-    fullName: 'Staff User',
-    role: 'staff' as const,
+    id: "3",
+    email: "staff@test.com",
+    password: "123456",
+    fullName: "Staff User",
+    role: "staff" as const,
   },
   {
-    id: '4',
-    email: 'technician@test.com',
-    password: '123456',
-    fullName: 'Technician User',
-    role: 'technician' as const,
+    id: "4",
+    email: "technician@test.com",
+    password: "123456",
+    fullName: "Technician User",
+    role: "technician" as const,
   },
 ];
 
@@ -92,13 +92,15 @@ export const authApi = {
     try {
       if (USE_MOCK_DATA) {
         // Mock implementation
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
-        
-        const user = MOCK_USERS.find(u => u.email === data.email && u.password === data.password);
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
+
+        const user = MOCK_USERS.find(
+          (u) => u.email === data.email && u.password === data.password
+        );
         if (!user) {
-          throw new Error('Invalid email or password');
+          throw new Error("Invalid email or password");
         }
-        
+
         return {
           accessToken: `mock-token-${user.id}-${Date.now()}`,
           refreshToken: `mock-refresh-${user.id}-${Date.now()}`,
@@ -110,9 +112,12 @@ export const authApi = {
           },
         };
       }
-      
+
       // Real API call (to be implemented)
-      const response = await httpClient.post<LoginResponse>('/auth/login', data);
+      const response = await httpClient.post<LoginResponse>(
+        "/auth/login",
+        data
+      );
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
@@ -126,19 +131,19 @@ export const authApi = {
     try {
       if (USE_MOCK_DATA) {
         // Mock implementation
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
         if (data.password !== data.confirmPassword) {
-          throw new Error('Passwords do not match');
+          throw new Error("Passwords do not match");
         }
-        
-        const existingUser = MOCK_USERS.find(u => u.email === data.email);
+
+        const existingUser = MOCK_USERS.find((u) => u.email === data.email);
         if (existingUser) {
-          throw new Error('Email already exists');
+          throw new Error("Email already exists");
         }
-        
+
         return {
-          message: 'Registration successful',
+          message: "Registration successful",
           user: {
             id: `${Date.now()}`,
             email: data.email,
@@ -146,9 +151,12 @@ export const authApi = {
           },
         };
       }
-      
+
       // Real API call
-      const response = await httpClient.post<RegisterResponse>('/auth/register', data);
+      const response = await httpClient.post<RegisterResponse>(
+        "/auth/register",
+        data
+      );
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
@@ -158,24 +166,26 @@ export const authApi = {
   /**
    * Forgot password
    */
-  forgotPassword: async (data: ForgotPasswordRequest): Promise<{ message: string }> => {
+  forgotPassword: async (
+    data: ForgotPasswordRequest
+  ): Promise<{ message: string }> => {
     try {
       if (USE_MOCK_DATA) {
         // Mock implementation
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const user = MOCK_USERS.find(u => u.email === data.email);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        const user = MOCK_USERS.find((u) => u.email === data.email);
         if (!user) {
-          throw new Error('Email not found');
+          throw new Error("Email not found");
         }
-        
+
         return {
-          message: 'Password reset link sent to your email',
+          message: "Password reset link sent to your email",
         };
       }
-      
+
       // Real API call
-      const response = await httpClient.post('/auth/forgot-password', data);
+      const response = await httpClient.post("/auth/forgot-password", data);
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
@@ -185,23 +195,25 @@ export const authApi = {
   /**
    * Reset password
    */
-  resetPassword: async (data: ResetPasswordRequest): Promise<{ message: string }> => {
+  resetPassword: async (
+    data: ResetPasswordRequest
+  ): Promise<{ message: string }> => {
     try {
       if (USE_MOCK_DATA) {
         // Mock implementation
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         if (data.password !== data.confirmPassword) {
-          throw new Error('Passwords do not match');
+          throw new Error("Passwords do not match");
         }
-        
+
         return {
-          message: 'Password reset successful',
+          message: "Password reset successful",
         };
       }
-      
+
       // Real API call
-      const response = await httpClient.post('/auth/reset-password', data);
+      const response = await httpClient.post("/auth/reset-password", data);
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
@@ -215,12 +227,12 @@ export const authApi = {
     try {
       if (USE_MOCK_DATA) {
         // Mock implementation
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         return;
       }
-      
+
       // Real API call
-      await httpClient.post('/auth/logout');
+      await httpClient.post("/auth/logout");
     } catch (error) {
       throw normalizeHttpError(error);
     }
@@ -229,19 +241,59 @@ export const authApi = {
   /**
    * Refresh token
    */
-  refreshToken: async (refreshToken: string): Promise<{ accessToken: string }> => {
+  refreshToken: async (
+    refreshToken: string
+  ): Promise<{ accessToken: string }> => {
     try {
       if (USE_MOCK_DATA) {
         // Mock implementation
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
         return {
           accessToken: `mock-refreshed-token-${Date.now()}`,
         };
       }
-      
+
       // Real API call
-      const response = await httpClient.post('/auth/refresh', { refreshToken });
+      const response = await httpClient.post("/auth/refresh", { refreshToken });
+      return response.data;
+    } catch (error) {
+      throw normalizeHttpError(error);
+    }
+  },
+
+  /**
+   * Get current user info
+   */
+  getMe: async (token?: string): Promise<LoginResponse["user"]> => {
+    try {
+      if (USE_MOCK_DATA) {
+        // Mock implementation
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        if (!token) {
+          throw new Error("No token provided");
+        }
+
+        // Extract user ID from mock token
+        const tokenParts = token.split("-");
+        const userId = tokenParts[2];
+
+        const user = MOCK_USERS.find((u) => u.id === userId);
+        if (!user) {
+          throw new Error("Invalid token or user not found");
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          fullName: user.fullName,
+          role: user.role,
+        };
+      }
+
+      // Real API call
+      const response = await httpClient.get<LoginResponse["user"]>("/auth/me");
       return response.data;
     } catch (error) {
       throw normalizeHttpError(error);
