@@ -1,6 +1,7 @@
+import { mockLogin, useAuthStore } from "@/src/store/authStore";
 import { router } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import {
   Button,
   Card,
@@ -15,10 +16,48 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = () => {
-    // TODO: Implement login logic
-    console.log("Login with:", { email, password });
+  const { login } = useAuthStore();
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please enter email and password");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { token, user } = await mockLogin(email, password);
+      login(token, user);
+
+      // Navigate to the appropriate dashboard based on role
+      switch (user.role) {
+        case "admin":
+          router.replace("/admin");
+          break;
+        case "member":
+          router.replace("/member");
+          break;
+        case "staff":
+          router.replace("/staff");
+          break;
+        case "technician":
+          router.replace("/technician");
+          break;
+        default:
+          router.replace("/");
+          break;
+      }
+    } catch (error) {
+      Alert.alert(
+        "Login Failed",
+        error instanceof Error ? error.message : "Invalid credentials"
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -31,6 +70,20 @@ export default function LoginScreen() {
               <Paragraph style={styles.subtitle}>
                 Sign in to your account
               </Paragraph>
+
+              <Card style={styles.testCredentials}>
+                <Card.Content>
+                  <Paragraph style={styles.testTitle}>
+                    Test Credentials:
+                  </Paragraph>
+                  <Paragraph style={styles.testText}>
+                    Admin: admin@test.com / 123456{"\n"}
+                    Member: member@test.com / 123456{"\n"}
+                    Staff: staff@test.com / 123456{"\n"}
+                    Technician: technician@test.com / 123456
+                  </Paragraph>
+                </Card.Content>
+              </Card>
 
               <View style={styles.inputContainer}>
                 <TextInput
@@ -64,8 +117,10 @@ export default function LoginScreen() {
                 onPress={handleLogin}
                 style={styles.loginButton}
                 contentStyle={styles.buttonContent}
+                loading={isLoading}
+                disabled={isLoading}
               >
-                Login
+                {isLoading ? "Signing in..." : "Login"}
               </Button>
 
               <Button
@@ -163,5 +218,20 @@ const styles = StyleSheet.create({
   },
   homeButton: {
     marginTop: 8,
+  },
+  testCredentials: {
+    backgroundColor: "#E3F2FD",
+    marginBottom: 16,
+    elevation: 1,
+  },
+  testTitle: {
+    fontWeight: "bold",
+    color: "#1976D2",
+    marginBottom: 8,
+  },
+  testText: {
+    fontSize: 12,
+    color: "#424242",
+    fontFamily: "monospace",
   },
 });
